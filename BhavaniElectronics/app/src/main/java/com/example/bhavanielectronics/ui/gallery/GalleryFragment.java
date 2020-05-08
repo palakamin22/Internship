@@ -29,7 +29,7 @@ public class GalleryFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
-        CustomerAdapter customAdapter = new CustomerAdapter(productImages,productNames);
+        CustomerAdapter customAdapter = new CustomerAdapter(getActivity().getApplicationContext(),productImages,productNames);
         recyclerView.setAdapter(customAdapter);
         return root;
     }

@@ -1,6 +1,8 @@
 package com.example.bhavanielectronics.ui.gallery;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,9 @@ import com.example.bhavanielectronics.R;
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ImageViewHolder> {
     private int[] productImages;
     private String[] productNames;
-    public CustomerAdapter(int[] productImages, String[] productNames){
+    public Context context;
+    public CustomerAdapter(Context context, int[] productImages, String[] productNames){
+        this.context = context;
         this.productImages = productImages;
         this.productNames = productNames;
     }
@@ -29,14 +33,19 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ImageV
 
     @Override
     public void onBindViewHolder(@NonNull CustomerAdapter.ImageViewHolder holder, int position) {
-       int image_id = productImages[position];
-       String title_id = productNames[position];
+       final int image_id = productImages[position];
+       final String title_id = productNames[position];
        holder.productImage.setImageResource(image_id);
        holder.productName.setText(title_id);
        holder.itemView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent = new Intent(g, ProductDescription.class);
+               Intent intent = new Intent(context,ProductDescription.class);
+               Bundle extras = new Bundle();
+               extras.putInt("Image",image_id);
+               extras.putString("Name",title_id);
+               intent.putExtras(extras);
+               context.startActivity(intent);
            }
        });
      }
