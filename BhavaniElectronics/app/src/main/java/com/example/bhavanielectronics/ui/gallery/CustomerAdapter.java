@@ -17,8 +17,8 @@ import com.example.bhavanielectronics.R;
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ImageViewHolder> {
     private int[] productImages;
     private String[] productNames;
-    public Context context;
-    public CustomerAdapter(Context context, int[] productImages, String[] productNames){
+    private Context context;
+    CustomerAdapter(Context context, int[] productImages, String[] productNames){
         this.context = context;
         this.productImages = productImages;
         this.productNames = productNames;
@@ -27,13 +27,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ImageV
     @Override
     public CustomerAdapter.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.albumcardlayout,parent,false);
-        ImageViewHolder imageViewHolder = new ImageViewHolder(view);
-        return imageViewHolder;
+        return new ImageViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CustomerAdapter.ImageViewHolder holder, int position) {
-       final int image_id = productImages[position];
+        final int image_id = productImages[position];
        final String title_id = productNames[position];
        holder.productImage.setImageResource(image_id);
        holder.productName.setText(title_id);
@@ -41,10 +40,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ImageV
            @Override
            public void onClick(View v) {
                Intent intent = new Intent(context,ProductDescription.class);
-               Bundle extras = new Bundle();
-               extras.putInt("Image",image_id);
-               extras.putString("Name",title_id);
-               intent.putExtras(extras);
+               //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+               intent.putExtra("Name", title_id);
                context.startActivity(intent);
            }
        });
@@ -54,10 +51,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ImageV
     public int getItemCount() {
         return 11;
     }
-    public static class ImageViewHolder extends RecyclerView.ViewHolder{
-        public ImageView productImage;
-        public TextView productName;
-        public ImageViewHolder(@NonNull View itemView) {
+    static class ImageViewHolder extends RecyclerView.ViewHolder{
+        ImageView productImage;
+        TextView productName;
+        ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.productImage);
             productName = itemView.findViewById(R.id.productName);
